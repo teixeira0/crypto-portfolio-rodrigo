@@ -1,2 +1,38 @@
-<h1>CryptoMarket#buy</h1>
-<p>Find me in app/views/crypto_market/buy.html.erb</p>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #eee;
+}
+table#t01 tr:nth-child(odd) {
+   background-color: #fff;
+}
+table#t01 th {
+    background-color: black;
+    color: white;
+}
+</style>
+<body>
+<h1>Crypto market</h1>
+
+<table id="t01">
+  <tr>
+    <th>Asset Name</th>
+    <th>Asset ID</th>
+    <th>Asset Value</th>
+  </tr>
+  <%= @assets.each do |asset| %>
+    <tr>
+    	<td><%= asset.asset_name %></td>
+    	<td><%= asset.asset_id %></td>
+    	<td><%= asset.asset_value %></td>
+    </tr>
+  <% end %>
+</table>
+</body>

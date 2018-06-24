@@ -2,6 +2,8 @@ require 'net/http'
 require 'openssl'
 require 'date'
 require 'json'
+require 'assets_controller'
+require 'asset'
 
 def request_uri(uri = "", parameters = {})
   	uri = URI.join(uri)
@@ -17,16 +19,20 @@ end
 
 class CryptoMarketController < ApplicationController
   def buy
-  	coins = request_uri("https://www.cryptocompare.com/api/data/coinlist/")[:Data]
-  	best_coins = {}
-	for coin in coins.values 
-		if coin[:SortOrder].to_i <= 10
-			best_coins[coin[:Symbol]] = coin[:CoinName]  
+  	if Asset.first.nil?
+	  	coins = request_uri("https://www.cryptocompare.com/api/data/coinlist/")[:Data]
+	  	best_coins = {}
+		for coin in coins.values 
+			if coin[:SortOrder].to_i <= 10
+				best_coins[coin[:Symbol]] = coin[:CoinName]  
+			end
+		end
+		rates = request_uri("https://min-api.cryptocompare.com/data/pricemulti", {'fsyms': best_coins.keys.join(','), 'tsyms': 'USD'})
+		for id, value in rates
+			asset = Asset.new(asset_id: id, asset_name: best_coins[id.to_s], asset_value: value[:USD])
+			asset.save
 		end
 	end
-	rates = request_uri("https://min-api.cryptocompare.com/data/pricemulti", {'fsyms': best_coins.keys.join(','), 'tsyms': 'USD'})
-	for id, value in rates
-		puts "Asset: #{best_coins[id.to_s]} is worth U$ #{value[:USD]}"
-	end
+	@assets = Asset.all
   end
 end

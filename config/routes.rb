@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'portfolio/view'
 
   resources :assets
+  resources :bought_assets
 
   root 'portfolio#view'
 end

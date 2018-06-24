@@ -1,1 +1,23 @@
+<style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: green;
+}
+</style>
+
 <h1>Cryptocurrency Portfolio</h1>
+
+<%= form_with url: crypto_market_buy_path, method: :get,local: true do |form| %>
+  <p>
+    <%= form.submit "Buy Assets", class: :button %>
+  </p>
+<% end %>

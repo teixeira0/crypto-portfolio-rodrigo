@@ -1,11 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: MyString
-  name: MyString
-  value: 1.5
+  asset_id: MyString
+  asset_name: MyString
+  asset_value: 1.5
+  quantity: 1.5
+  total_value: 1.5
 
 two:
-  id: MyString
-  name: MyString
-  value: 1.5
+  asset_id: MyString
+  asset_name: MyString
+  asset_value: 1.5
+  quantity: 1.5
+  total_value: 1.5

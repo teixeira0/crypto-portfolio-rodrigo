@@ -4,7 +4,7 @@ table, th, td {
     border-collapse: collapse;
 }
 th, td {
-    padding: 15px;
+    padding: 5px;
     text-align: left;
 }
 table#t01 tr:nth-child(even) {
@@ -31,30 +31,29 @@ table#t01 th {
     background-color: green;
 }
 </style>
-
-<center><h1>Cryptocurrency Portfolio</h1>
+<center><h1>Buy Asset</h1>
+<p>Do you really want to buy this asset?</p>
 <table id="t01">
   <tr>
     <th>Asset Name</th>
     <th>Asset ID</th>
     <th>Asset Value</th>
     <th>Quantity</th>
-    <th>Total Value</th>
+    <th>Buy</th>
   </tr>
-  <% if not @bought_assets.nil?%>
-	  <% @bought_assets.each do |asset| %>
-	    <tr>
-	    	<td><b><%= asset.asset_name %></b></td>
-	    	<td><%= asset.asset_id %></td>
-	    	<td>US$ <%= asset.asset_value.round(5) %></td>
-	    	<td><%= asset.quantity.to_i %></td>
-	    	<td>US$ <%= (asset.asset_value * asset.quantity).round(5) %></td>
-	    </tr>
-	  <% end %>
+  <% @assets.each do |asset| %>
+  	<% if asset.asset_id == @buy_id %>
+    	<tr>
+    		<td><b><%= asset.asset_name %></b></td>
+    		<td><%= asset.asset_id %></td>
+    		<td>US$ <%= asset.asset_value %></td>
+    		<%=form_with scope: :asset_quantity, url: portfolio_add_asset_path do |form|%>
+    			<%=form.hidden_field 'id', value: asset.asset_id %>
+    			<td><%= form.number_field 'quantity', {value: 0, min: 0, step: 1} %></td>
+    			<td><%= form.submit 'Confirm Operation', {class: 'button'} %></td>
+    		<%end%>
+    	</tr>
+    <% end %>
   <% end %>
 </table>
-<%= form_with url: crypto_market_buy_path, method: :get,local: true do |form| %>
-  <p>
-    <%= form.submit "Buy Assets", class: :button %>
-  </p>
-<% end %></center>
+</center>

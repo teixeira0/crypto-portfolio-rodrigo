@@ -35,4 +35,8 @@ class CryptoMarketController < ApplicationController
 	end
 	@assets = Asset.all
   end
+  def confirm
+  	@assets = Asset.all
+  	@buy_id = params[:data]
+  end
 end

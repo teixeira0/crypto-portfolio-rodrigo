@@ -1,38 +1,11 @@
 <style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
-}
-table#t01 tr:nth-child(odd) {
-   background-color: #fff;
-}
-table#t01 th {
-    background-color: black;
-    color: white;
-}
-.button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 25px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: green;
+form {
+    display: inline-block;
 }
 </style>
 
 <center><h1>Cryptocurrency Portfolio</h1>
+	<p>Developed by Rodrigo Teixeira. <a href="https://github.com/teixeira0/crypto-portfolio-rodrigo">Github</a></p>
 <table id="t01">
   <tr>
     <th>Asset Name</th>
@@ -53,8 +26,12 @@ table#t01 th {
 	  <% end %>
   <% end %>
 </table>
+<p>
+<%= form_with url: portfolio_reset_path, method: :get,local: true do |form| %>
+    <%= form.submit "Clear Portfolio", class: :back_button %>
+<% end %>&nbsp;
 <%= form_with url: crypto_market_buy_path, method: :get,local: true do |form| %>
-  <p>
     <%= form.submit "Buy Assets", class: :button %>
-  </p>
-<% end %></center>
+<% end %>
+</p>
+</center>

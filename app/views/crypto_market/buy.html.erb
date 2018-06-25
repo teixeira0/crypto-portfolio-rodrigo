@@ -1,37 +1,15 @@
 <style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
 th, td {
     padding: 5px;
-    text-align: left;
-}
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
-}
-table#t01 tr:nth-child(odd) {
-   background-color: #fff;
-}
-table#t01 th {
-    background-color: black;
-    color: white;
 }
 .button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 25px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: green;
+    padding: 10px 15px;
 }
 </style>
-<center><h1>Crypto market</h1>
+<center><h1>Crypto Market</h1>
+<%= form_with scope: :asset_quantity, url: crypto_market_update_quantity_path, method: :get,local: true do |form| %>Showing <%= form.number_field 'quantity', {value: @assets_available, min: 10, max: 70, step: 10} %> of the best Cryptocurrencies, volume-wise.&nbsp;&nbsp;&nbsp;
+<%= form.submit "Update Quantity", class: :button %>
+<% end %><br>
 
 <table id="t01">
   <tr>
@@ -48,4 +26,14 @@ table#t01 th {
     	<td><%= button_to 'Buy', {action: "confirm", data: asset.asset_id}, {class: 'button'} %></td>
     </tr>
   <% end %>
-</table></center>
+</table>
+<p>
+Last updated: <%= @last_updated.date %>. Source: <a href="https://www.cryptocompare.com/">CryptoCompare</a>
+<%= form_with url: crypto_market_refresh_path, method: :get,local: true do |form| %>
+    <%= form.submit "Update Values", class: :button %>
+<% end %><br>
+<%= form_with url: portfolio_view_path, method: :get,local: true do |form| %>
+    <%= form.submit "Back", class: :back_button %>
+<% end %>
+</p>
+</center>
